@@ -327,12 +327,24 @@ describe('SinglyLinkedList', () => {
     it('should reverse a linkedList', () => {
       const linkedList = new LinkedList();
       const testArr = ['a', 'b', 'c', 'd', 'e', 'f', 'g'];
+      const spy = jest.spyOn(linkedList, 'reverse');
       testArr.forEach(item => linkedList.push(item));
 
+      // 1. we reverse the linkedList
       linkedList.reverse();
+      expect(spy).toHaveBeenCalledTimes(1);
 
       [...testArr]
         .reverse()
+        .forEach((item, index) => {
+          expect(linkedList.get(index).value).toBe(item);
+        });
+
+      // 2. we reverse the linkedList again
+      linkedList.reverse();
+      expect(spy).toHaveBeenCalledTimes(2);
+
+      [...testArr]
         .forEach((item, index) => {
           expect(linkedList.get(index).value).toBe(item);
         });
