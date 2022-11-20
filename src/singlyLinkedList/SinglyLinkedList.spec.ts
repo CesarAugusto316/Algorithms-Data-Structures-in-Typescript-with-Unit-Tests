@@ -323,7 +323,7 @@ describe('SinglyLinkedList', () => {
     });
   });
 
-  describe.only('Method Invocation: .reverse()', () => {
+  describe('Method Invocation: .reverse()', () => {
     it('should reverse a linkedList', () => {
       const linkedList = new LinkedList();
       const testArr = ['a', 'b', 'c', 'd', 'e', 'f', 'g'];
