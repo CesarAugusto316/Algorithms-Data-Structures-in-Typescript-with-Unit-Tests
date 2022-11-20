@@ -161,6 +161,13 @@ describe('LinkedList', () => {
       expect(removed2?.value).toBe('b');
       expect(linkedList.head?.value).toBe('c');
       expect(linkedList.length).toBe(1);
+
+      const removed3 = linkedList.shift();
+      expect(spy).toHaveBeenCalledTimes(3);
+      expect(removed3?.value).toBe('c');
+      expect(linkedList.head).toBe(null);
+      expect(linkedList.tail).toBe(null);
+      expect(linkedList.length).toBe(0);
     });
 
     it('should remove an item at the start, when length === 1', () => {
@@ -192,6 +199,60 @@ describe('LinkedList', () => {
       expect(linkedList.head).toBe(null);
       expect(linkedList.tail).toBe(null);
       expect(linkedList.length).toBe(0);
+    });
+  });
+
+  describe('Method Invocation: .get()', () => {
+    it('should get an item by index', () => {
+      const linkedList = new LinkedList();
+      const testArr = ['a', 'b', 'c', 'd', 'e', 'f', 'g'];
+
+      testArr.forEach(item => linkedList.push(item));
+
+      testArr.forEach((item, index) => {
+        expect(linkedList.get(index).value).toBe(item);
+      });
+    });
+
+    it('should throw out of range error', () => {
+      const linkedList = new LinkedList();
+      const testArr = ['a', 'b', 'c', 'd', 'e', 'f', 'g'];
+      const error = new TypeError('index out of range');
+
+      testArr.forEach(item => linkedList.push(item));
+
+      expect(() => linkedList.get(-1)).toThrow(error);
+      expect(() => linkedList.get(testArr.length)).toThrow(error);
+    });
+
+    it('should throw error when array is empty', () => {
+      const linkedList = new LinkedList();
+      const testArr = [];
+      const error = new TypeError('index out of range');
+
+      expect(() => linkedList.get(-1)).toThrow(error);
+      expect(() => linkedList.get(testArr.length)).toThrow(error);
+    });
+  });
+
+  describe('Method Invocation: .insert()', () => {
+    it('should throw error when array is empty', () => {
+      const linkedList = new LinkedList();
+      const testArr = ['a', 'b', 'c', 'd', 'e', 'f', 'g'];
+
+      testArr.forEach((item, index) => {
+        linkedList.insert(index, item);
+        expect(linkedList.get(index).value).toBe(item);
+      });
+    });
+
+    it('should throw error when array is empty', () => {
+      const linkedList = new LinkedList();
+      const testArr = [];
+      const error = new TypeError('index out of range');
+
+      expect(() => linkedList.get(-1)).toThrow(error);
+      expect(() => linkedList.get(testArr.length)).toThrow(error);
     });
   });
 });

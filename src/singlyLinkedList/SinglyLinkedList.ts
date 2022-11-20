@@ -23,9 +23,45 @@ export class LinkedList {
     }
   }
 
+  public get(index: number): Ivertex {
+    if ((index >= 0 && index < this.length) && this.length) {
+      let temp: Ivertex | null | undefined = this.head;
+
+      for (let i = 0; i < index; i++) {
+        temp = temp?.next;
+      }
+
+      return temp as Ivertex;
+    }
+    throw new TypeError('index out of range');
+  }
+
+  public set(index: number, value: any): Ivertex {
+    const vertex = this.get(index);
+    vertex.value = value;
+
+    return vertex;
+  }
+
+  public insert(index: number, value: any) {
+    if (index === 0) {
+      return this.unshift(value);
+    }
+    if (index === this.length - 1) {
+      return this.push(value);
+    }
+
+    const prev = this.get(index - 1);
+    const temp = prev.next;
+    prev.next = new Vertex(value);
+    prev.next.next = temp;
+    this.length++;
+    return this;
+  }
+
   /**
    *
-   * @BigO O(1)
+   * @description O(1)
    */
   public push(value: any) {
     const newVertex: Ivertex = new Vertex(value);
@@ -43,7 +79,7 @@ export class LinkedList {
 
   /**
    *
-   * @BigO O(1)
+   * @description O(1)
    */
   public unshift(value: any) {
     const newVertex: Ivertex = new Vertex(value);
@@ -61,17 +97,9 @@ export class LinkedList {
     return this;
   }
 
-  // /**
-  //  *
-  //  * @BigO O(n)
-  //  */
-  // public insert(value: any) {
-  //   const newVertex = new Vertex(value);
-  // }
-
   /**
    *
-   * @BigO O(1)
+   * @description O(1)
    */
   public shift(): Ivertex | undefined {
     if (this.head && this.tail && this.length === 1) {
@@ -93,7 +121,7 @@ export class LinkedList {
 
   /**
    *
-   * @BigO O(n)
+   * @description O(n)
    */
   public pop(): Ivertex | undefined {
     if (this.head && this.tail && this.length >= 2) {
