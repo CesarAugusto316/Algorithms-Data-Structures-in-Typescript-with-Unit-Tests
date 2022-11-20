@@ -1,7 +1,7 @@
 import { LinkedList, Vertex } from './SinglyLinkedList';
 
 
-describe('LinkedList', () => {
+describe('SinglyLinkedList', () => {
 
   describe('Instantiation: new LinkedList()', () => {
     it('should have a length, head & tail properties', () => {
@@ -212,6 +212,8 @@ describe('LinkedList', () => {
       testArr.forEach((item, index) => {
         expect(linkedList.get(index).value).toBe(item);
       });
+
+      expect(linkedList.tail?.next).toBe(null);
     });
 
     it('should throw out of range error', () => {
@@ -236,23 +238,104 @@ describe('LinkedList', () => {
   });
 
   describe('Method Invocation: .insert()', () => {
-    it('should throw error when array is empty', () => {
+    it('should insert an item in sequential order', () => {
       const linkedList = new LinkedList();
       const testArr = ['a', 'b', 'c', 'd', 'e', 'f', 'g'];
 
       testArr.forEach((item, index) => {
         linkedList.insert(index, item);
+      });
+
+      testArr.forEach((item, index) => {
         expect(linkedList.get(index).value).toBe(item);
       });
+
+      expect(linkedList.length).toBe(testArr.length);
+      expect(linkedList.tail?.next).toBe(null);
     });
 
-    it('should throw error when array is empty', () => {
+    it('should insert an item in the same position repeatedly', () => {
+      const linkedList = new LinkedList();
+      const testArr = ['a', 'b', 'c', 'd', 'e', 'f', 'g'];
+      const samePosition = 0;
+
+      testArr.forEach((item) => {
+        linkedList.insert(samePosition, item);
+        // ['g', 'f', 'e', 'd', 'c', 'b', 'a']
+        expect(linkedList.get(samePosition).value).toBe(item);
+      });
+
+      expect(linkedList.length).toBe(testArr.length);
+      expect(linkedList.tail?.next).toBe(null);
+
+      [...testArr]
+        .reverse()
+        // ['g', 'f', 'e', 'd', 'c', 'b', 'a']
+        .forEach((item, index) => {
+          expect(linkedList.get(index).value).toBe(item);
+        });
+    });
+
+    it('should throw error when inserting in a not allowed index', () => {
       const linkedList = new LinkedList();
       const testArr = [];
       const error = new TypeError('index out of range');
 
-      expect(() => linkedList.get(-1)).toThrow(error);
-      expect(() => linkedList.get(testArr.length)).toThrow(error);
+      expect(() => linkedList.insert(-1, 'test')).toThrow(error);
+      expect(() => linkedList.insert(testArr.length + 1, 'test')).toThrow(error);
+    });
+  });
+
+  describe('Method Invocation: .remove()', () => {
+    let linkedList: LinkedList;
+    const testArr = ['a', 'b', 'c', 'd', 'e', 'f', 'g'];
+
+    beforeEach(() => {
+      linkedList = new LinkedList();
+      testArr.forEach(item => linkedList.push(item));
+    });
+
+    it('should remove an item (start)', () => {
+      testArr.forEach((item) => {
+        const removed = linkedList.remove(0);
+
+        expect(removed?.value).toBe(item);
+        expect(removed?.next).toBe(null);
+      });
+
+      expect(linkedList.length).toBe(0);
+      expect(linkedList.head).toBe(null);
+      expect(linkedList.tail).toBe(null);
+    });
+
+    it('should remove an item (end)', () => {
+      testArr.forEach((__, index) => {
+        const lastIndex = testArr.length - (1 + index);
+        const removed = linkedList.remove(lastIndex);
+
+        expect(removed?.value).toBe(testArr[lastIndex]);
+        expect(removed?.next).toBe(null);
+      });
+
+      expect(linkedList.length).toBe(0);
+      expect(linkedList.head).toBe(null);
+      expect(linkedList.tail).toBe(null);
+    });
+  });
+
+  describe.only('Method Invocation: .reverse()', () => {
+    it('should reverse a linkedList', () => {
+      const linkedList = new LinkedList();
+      const testArr = ['a', 'b', 'c', 'd', 'e', 'f', 'g'];
+      testArr.forEach(item => linkedList.push(item));
+
+      linkedList.reverse();
+
+      [...testArr]
+        .reverse()
+        .forEach((item, index) => {
+          expect(linkedList.get(index).value).toBe(item);
+        });
     });
   });
 });

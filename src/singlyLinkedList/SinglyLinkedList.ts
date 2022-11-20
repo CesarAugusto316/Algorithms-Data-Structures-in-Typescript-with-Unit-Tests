@@ -23,6 +23,10 @@ export class LinkedList {
     }
   }
 
+  /**
+   *
+   * @description O(n)
+   */
   public get(index: number): Ivertex {
     if ((index >= 0 && index < this.length) && this.length) {
       let temp: Ivertex | null | undefined = this.head;
@@ -36,6 +40,10 @@ export class LinkedList {
     throw new TypeError('index out of range');
   }
 
+  /**
+   *
+   * @description O(n)
+   */
   public set(index: number, value: any): Ivertex {
     const vertex = this.get(index);
     vertex.value = value;
@@ -43,20 +51,50 @@ export class LinkedList {
     return vertex;
   }
 
+  /**
+   *
+   * @description O(n)
+   */
   public insert(index: number, value: any) {
-    if (index === 0) {
-      return this.unshift(value);
-    }
-    if (index === this.length - 1) {
-      return this.push(value);
-    }
+    if ((index >= 0) && (index <= this.length)) {
+      if (index === 0) {
+        return this.unshift(value);
+      }
+      if (index === this.length) {
+        return this.push(value);
+      }
 
-    const prev = this.get(index - 1);
-    const temp = prev.next;
-    prev.next = new Vertex(value);
-    prev.next.next = temp;
-    this.length++;
-    return this;
+      const prev = this.get(index - 1);
+      const temp = prev.next;
+      prev.next = new Vertex(value);
+      prev.next.next = temp;
+      this.length++;
+      return this;
+    }
+    throw new TypeError('index out of range');
+  }
+
+  /**
+   *
+   * @description O(n)
+   */
+  public remove(index: number): Ivertex | undefined {
+    if ((index >= 0 && index < this.length) && this.length) {
+      if (index === 0) {
+        return this.shift();
+      }
+      if (index === this.length - 1) {
+        return this.pop();
+      }
+
+      const prev = this.get(index - 1);
+      const temp = prev.next as Ivertex;
+      prev.next = temp.next;
+      temp.next = null;
+      this.length--;
+      return temp;
+    }
+    throw new TypeError('index out of range');
   }
 
   /**
@@ -70,7 +108,8 @@ export class LinkedList {
       this.head = this.tail = newVertex;
     }
     else if (this.tail) {
-      this.tail.next = this.tail = newVertex;
+      this.tail.next = newVertex;
+      this.tail = newVertex;
     }
 
     this.length++;
@@ -147,5 +186,38 @@ export class LinkedList {
     }
 
     return undefined;
+  }
+
+  /**
+   * 
+   * @description O(n)
+   */
+  public reverse() {
+    let prev: Ivertex | null = null;
+    let curr: Ivertex | null = this.head;
+    let temp: Ivertex | null;
+
+    for (let i = 0; i < this.length; i++) {
+      temp = (curr as Ivertex).next; // has all the chain of pointers
+      (curr as Ivertex).next = prev; // points to the previous vertex
+      prev = curr;
+      curr = temp;
+    }
+
+    [this.head, this.tail] = [this.tail, this.head];
+    return this;
+  }
+
+  /**
+   * 
+   * @description O(n)
+   */
+  public log() {
+    let temp = this.head;
+
+    while (temp) {
+      console.log(temp);
+      temp = temp.next;
+    }
   }
 }
