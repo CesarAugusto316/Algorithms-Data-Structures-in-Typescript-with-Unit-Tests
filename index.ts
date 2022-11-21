@@ -1,10 +1,9 @@
-import { LinkedList } from './src/singlyLinkedList/SinglyLinkedList';
+import { DoublyLinkedList } from './src/doublyLinkedList/DoublyLinkedList';
 
 
-const linkedList = new LinkedList();
-const testArr = ['a'];
+const linkedList = new DoublyLinkedList();
+const testArr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 testArr.forEach(item => linkedList.push(item));
+testArr.forEach(() => linkedList.pop());
 
-// linkedList.log();
-// linkedList.reverse().log();
-// console.log('********************');
+console.log(linkedList);
