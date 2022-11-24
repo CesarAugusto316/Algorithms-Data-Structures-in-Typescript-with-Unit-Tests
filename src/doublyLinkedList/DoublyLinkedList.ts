@@ -23,6 +23,34 @@ export class DoublyLinkedList {
     }
   }
 
+  public get(index: number) {
+    if (this.length >= 0 && this.length - 1) {
+      const middle = Math.floor(this.length / 2);
+
+      if (index < middle) {
+        let temp = this.head;
+        for (let i = 0; i < index; i++) {
+          temp = (temp as Ivertex).next;
+        }
+        return temp;
+      }
+      let temp = this.tail;
+      for (let i = this.length - 1; i > index; i--) {
+        temp = (temp as Ivertex).prev;
+      }
+      return temp;
+    }
+
+    throw new TypeError('index out of range');
+  }
+
+  public set(index: number, value: any) {
+    const temp = this.get(index) as Ivertex;
+    temp.value = value;
+
+    return temp;
+  }
+
   /**
    * 
    * @description O(1)
@@ -47,20 +75,56 @@ export class DoublyLinkedList {
    * @description O(1)
    */
   public pop() {
-    if (this.head && this.tail) {
-      const last = this.tail;
+    if (this.tail) {
+      const temp = this.tail;
+      const prev = this.tail.prev;
 
       if (this.length === 1) {
         this.head = this.tail = null;
       }
       if (this.length >= 2) {
-        this.tail = this.tail?.prev as Ivertex;
-        this.tail.next = null;
-        last.prev = null;
+        [this.tail, (this.tail as Ivertex).next, temp.prev]
+          = [prev, null, null];
       }
 
       this.length--;
-      return last;
+      return temp;
+    }
+
+    return undefined;
+  }
+
+  public unshift(value: any) {
+    const newVertex = new Vertex(value);
+
+    if (!this.head) {
+      this.head = this.tail = newVertex;
+    }
+    else {
+      [newVertex.next, this.head.prev, this.head]
+        = [this.head, newVertex, newVertex];
+    }
+
+    this.length++;
+    return this;
+  }
+
+  public shift() {
+    if (this.head) {
+      const temp = this.head;
+      const next = this.head.next as Ivertex;
+
+      if (this.length === 1) {
+        this.head = this.tail = null;
+      }
+      if (this.length >= 2) {
+        this.head = next;
+        this.head.prev = null;
+        temp.prev = temp.next = null;
+      }
+
+      this.length--;
+      return temp;
     }
 
     return undefined;

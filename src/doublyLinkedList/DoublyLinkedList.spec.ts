@@ -82,4 +82,79 @@ describe('DoublyLinkedList', () => {
       expect(removed).toBe(undefined);
     });
   });
+
+  describe('Method Invocation: .unshift()', () => {
+    test('adds items at the beginning', () => {
+      const linkedList = new DoublyLinkedList();
+      const testArr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+      const spy = jest.spyOn(linkedList, 'unshift');
+
+      testArr.forEach(item => linkedList.unshift(item));
+
+      expect(spy).toHaveBeenCalledTimes(testArr.length);
+      expect(linkedList.length).toBe(testArr.length);
+      expect(linkedList.head?.prev).toBe(null);
+      expect(linkedList.tail?.next).toBe(null);
+    });
+  });
+
+  describe('Method Invocation: .shift()', () => {
+    test('removes items at the beginning', () => {
+      const linkedList = new DoublyLinkedList();
+      const testArr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+
+      testArr.forEach(item => linkedList.unshift(item));
+
+      testArr.forEach(() => {
+        const removed = linkedList.shift();
+        expect(removed?.prev).toBe(null);
+        linkedList.tail && expect(linkedList.tail.next).toBe(null);
+      });
+
+      expect(linkedList.length).toBe(0);
+      expect(linkedList.head).toBe(null);
+      expect(linkedList.tail).toBe(null);
+    });
+  });
+
+  describe('Method Invocation: .get()', () => {
+    test('returns a vertex by index, starts from zero', () => {
+      const linkedList = new DoublyLinkedList();
+      const testArr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+
+      testArr.forEach(item => linkedList.push(item));
+
+      // starting from zero
+      testArr.forEach((item, i) => {
+        expect(linkedList.get(i)?.value).toBe(item);
+      });
+    });
+
+    test('returns a vertex by index, starts from last index', () => {
+      const linkedList = new DoublyLinkedList();
+      const testArr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+
+      testArr.forEach(item => linkedList.unshift(item));
+
+      // starting from last item
+      testArr.forEach((item, i) => {
+        const lastIndex = testArr.length - (1 + i);
+        expect(linkedList.get(lastIndex)?.value).toBe(item);
+      });
+    });
+
+  });
+
+  describe('Method Invocation: .set()', () => {
+    test('mutates the value of a vertex by index', () => {
+      const linkedList = new DoublyLinkedList();
+      const testArr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+
+      testArr.forEach(item => linkedList.push(item));
+
+      testArr.forEach((__, index) => {
+        expect(linkedList.set(index, index).value).toBe(index);
+      });
+    });
+  });
 });
