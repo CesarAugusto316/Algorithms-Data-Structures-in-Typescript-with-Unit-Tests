@@ -1,7 +1,7 @@
 import { LinkedList, Vertex } from './SinglyLinkedList';
 
 
-describe('SinglyLinkedList', () => {
+describe('SinglyLinkedList Data Structure', () => {
 
   describe('Instantiation: new LinkedList()', () => {
     it('should have a length, head & tail properties', () => {

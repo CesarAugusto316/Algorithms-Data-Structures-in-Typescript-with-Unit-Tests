@@ -1,9 +1,8 @@
-import { DoublyLinkedList } from './src/doublyLinkedList/DoublyLinkedList';
+import { Stack } from './src/stack/Stack';
 
 
-const linkedList = new DoublyLinkedList();
+const stack = new Stack();
 const testArr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
-testArr.forEach(item => linkedList.push(item));
-testArr.forEach(() => linkedList.pop());
+testArr.forEach(item => stack.push(item));
 
-console.log(linkedList);
+console.log(stack);

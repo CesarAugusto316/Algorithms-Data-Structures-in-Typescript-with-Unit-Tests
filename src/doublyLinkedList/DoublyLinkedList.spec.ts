@@ -1,7 +1,7 @@
 import { DoublyLinkedList, Vertex } from './DoublyLinkedList';
 
 
-describe('DoublyLinkedList', () => {
+describe('DoublyLinkedList Data Structure', () => {
 
   describe('Instantiation: new DoublyLinkedList()', () => {
     test('next, prev, length properties', () => {

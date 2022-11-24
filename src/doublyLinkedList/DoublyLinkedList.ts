@@ -52,6 +52,52 @@ export class DoublyLinkedList {
   }
 
   /**
+   *
+   * @description O(n)
+   */
+  public insert(index: number, value: any) {
+    if ((index >= 0) && (index <= this.length)) {
+      if (index === 0) {
+        return this.unshift(value);
+      }
+      if (index === this.length) {
+        return this.push(value);
+      }
+
+      const prev = this.get(index - 1) as Ivertex;
+      const temp = prev.next;
+      prev.next = new Vertex(value);
+      prev.next.next = temp;
+      this.length++;
+      return this;
+    }
+    throw new TypeError('index out of range');
+  }
+
+  /**
+   *
+   * @description O(n)
+   */
+  public remove(index: number): Ivertex | undefined {
+    if ((index >= 0 && index < this.length) && this.length) {
+      if (index === 0) {
+        return this.shift();
+      }
+      if (index === this.length - 1) {
+        return this.pop();
+      }
+
+      const prev = this.get(index - 1);
+      const temp = prev?.next as Ivertex;
+      (prev as Ivertex).next = temp.next;
+      temp.next = null;
+      this.length--;
+      return temp;
+    }
+    throw new TypeError('index out of range');
+  }
+
+  /**
    * 
    * @description O(1)
    */
@@ -128,5 +174,14 @@ export class DoublyLinkedList {
     }
 
     return undefined;
+  }
+
+  public log() {
+    let temp = this.head;
+
+    while (temp) {
+      console.log(temp);
+      temp = temp.next;
+    }
   }
 }

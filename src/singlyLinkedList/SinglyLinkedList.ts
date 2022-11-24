@@ -16,7 +16,7 @@ export class LinkedList {
   public length = 0;
 
   constructor(value: any = null) {
-    if (value) {
+    if (value !== null) {
       this.head = this.tail = new Vertex(value);
       this.length++;
       return this;
