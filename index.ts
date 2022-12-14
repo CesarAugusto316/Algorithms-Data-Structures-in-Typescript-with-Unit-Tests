@@ -1,8 +1,5 @@
-import { Stack } from './src/stack/Stack';
+// import { Stack } from './src/stack/Stack';
+import _ from 'lodash';
 
 
-const stack = new Stack();
-const testArr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
-testArr.forEach(item => stack.push(item));
-
-console.log(stack);
+console.log(_.chunk([1, 23, 6, 4, 5, 7, 9, 4, 7, 6,], 3));

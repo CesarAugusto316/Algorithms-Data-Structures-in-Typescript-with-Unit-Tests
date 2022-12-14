@@ -1,6 +1,6 @@
 interface Ivertex {
-  next: Ivertex | null,
-  value: any
+  value: any,
+  next: Ivertex | null
 }
 
 export class Vertex implements Ivertex {
