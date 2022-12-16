@@ -16,6 +16,7 @@
     "quotes": ["error", "single"],
     "semi": ["error", "always"],
     "implicit-arrow-linebreak": "error",
-    "@typescript-eslint/no-explicit-any": "off"
+    "@typescript-eslint/no-explicit-any": "off",
+    "no-unexpected-multiline": "off"
   }
 }
